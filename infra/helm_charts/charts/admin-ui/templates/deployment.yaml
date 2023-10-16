@@ -39,30 +39,29 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 180
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 210
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
-          - name: nginx-volume
-            mountPath: /etc/nginx/conf.d
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
       volumes:
-        - name: nginx-volume
-          configMap:
-            #name: {{ .Chart.Name }}-admin-ui
-            name: {{ include "admin-ui.fullname" . }}-admin-ui
-            items:
-            - key: default.conf
-              path: default.conf
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

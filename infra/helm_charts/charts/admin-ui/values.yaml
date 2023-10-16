@@ -43,6 +43,7 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: 80
+  targetPort: 80
 ServiceAnnotations:
   service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
   service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
@@ -100,3 +101,17 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+volumes: 
+ - name: adminui-configmap
+   configMap:
+      name: sbrc-adminui-configmap
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+ - name: adminui-configmap
+   mountPath: "/etc/nginx/conf.d/"
+   readOnly: true

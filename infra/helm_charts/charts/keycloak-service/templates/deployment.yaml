@@ -50,20 +50,20 @@ spec:
                   key: KEYCLOAK_ADMIN_PASSWORD
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /auth/
-              port: {{ .Values.service.port }}
+              port: {{ .Values.service.targetPort }}
             failureThreshold: 10
             periodSeconds: 30
             timeoutSeconds: 10
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 15
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 150
             periodSeconds: 30
             failureThreshold: 10
           resources:
