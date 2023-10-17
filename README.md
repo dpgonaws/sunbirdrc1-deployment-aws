@@ -28,6 +28,16 @@ Talk about AWS CDK and Helm charts
 ### Sunbird RC services
 List services that are installed through automation
 
+**sbrc-registry**
+**sbrc-registry-certificate-api**
+**sbrc-registry-certificate-signer**
+**sbrc-registry-claim-ms**
+**sbrc-registry-context-proxy-service**
+**sbrc-registry-keycloak-service**
+**sbrc-registry-notification-ms**
+**sbrc-registry-public-key-service**
+**sunbird-rc-admin**
+
 ### Reference architecture
 Moz to update the reference architecture and add here.
 
