@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "keycloak-service.fullname" . }}
+  name: {{ include "admin-ui.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "keycloak-service.labels" . | nindent 4 }}
+    {{- include "admin-ui.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "keycloak-service.selectorLabels" . | nindent 6 }}
+      {{- include "admin-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,13 +19,16 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "keycloak-service.selectorLabels" . | nindent 8 }}
+        {{- include "admin-ui.labels" . | nindent 8 }}
+	{{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "keycloak-service.serviceAccountName" . }}
+      serviceAccountName: {{ include "admin-ui.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -34,40 +37,30 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: "{{ .Release.Name }}-config"
-          env:
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: rc-secret
-                  key: DB_PASSWORD
-            - name: KEYCLOAK_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: rc-secret
-                  key: KEYCLOAK_ADMIN_PASSWORD
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /auth/
-              port: {{ .Values.service.targetPort }}
-            failureThreshold: 10
-            periodSeconds: 30
-            timeoutSeconds: 10
-            initialDelaySeconds: 120
+              path: /
+              port: http
+            initialDelaySeconds: 180
           livenessProbe:
-            tcpSocket:
-              port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 150
-            periodSeconds: 30
-            failureThreshold: 10
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 210
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
