@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
 {{ toYaml .Values.ServiceAnnotations | indent 4 }}
+    service.beta.kubernetes.io/aws-load-balancer-name: sbrc-keycloak-ui
   labels:
     {{- include "keycloak-service.labels" . | nindent 4 }}
 spec:

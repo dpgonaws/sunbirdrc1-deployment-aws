@@ -11,9 +11,6 @@ global:
       username: "admin"
     proxy_forwarding: true
   registry:
-    serviceaccount_name: "sbrc-sa"
-    serviceaccount_role_arn: 
-      eks.amazonaws.com/role-arn: "arn:aws:iam::370803901956:role/sbrc-eks-serviceaccount-role"
     database: "registry" # to be checked
     search_provider: "dev.sunbirdrc.registry.service.NativeSearchService"
     #search_provider: "dev.sunbirdrc.registry.service.ElasticSearchService" # to be checked
@@ -36,19 +33,19 @@ global:
     #access_key: 
     bucket_key: sbrc-registry
   elastic_search:
-    url:
+    url: vpc-sbrc-opensearch-xx7wx6ao7vjyhjgqf54cavv7ie.ap-south-1.es.amazonaws.com:9200
     auth_enabled: false
     username: "opensearch"
   kafka:
-    url:
+    url: b-2.sbrcmskcluster.k7ypyl.c2.kafka.ap-south-1.amazonaws.com:9098
   redis:
-    host:
+    host: sbrc-redis-cache.uzhqox.ng.0001.aps1.cache.amazonaws.com
     port: 6379
   secrets:
-    DB_PASSWORD: 
+    DB_PASSWORD: UGdzcWwxMjM=
     ELASTIC_SEARCH_PASSWORD: T3BlbnNlYXJjaEAxMjMK
     KEYCLOAK_ADMIN_CLIENT_SECRET: YzllOTA1YTQtOWIyZi00NWU2LThlMDUtMTNjM2E5NTNmNjUx
     KEYCLOAK_ADMIN_PASSWORD: YWRtaW4xMjM=
     KEYCLOAK_DEFAULT_USER_PASSWORD: YWRtaW5AMTIz
-    MINIO_SECRET_KEY:
-    access_key:
+    MINIO_SECRET_KEY: WDRIeDc5RzhRbXpoZWYyaHVqSkVLOFF1WTRtYk4ycTVQWXNZS2M2NA==
+    access_key: QUtJQVZNVk5DUVlDQ0haVVBZV1E=

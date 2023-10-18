@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
 {{ toYaml .Values.ServiceAnnotations | indent 4 }}
+    service.beta.kubernetes.io/aws-load-balancer-name: sbrc-admin-ui
   labels:
     {{- include "admin-ui.labels" . | nindent 4 }}
 spec:
