@@ -26,7 +26,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "registry.serviceAccountName" . }}
+      serviceAccountName: {{ .Values.global.registry.serviceaccount_name | quote }}
       #serviceAccountName: sbrc-test-sa
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}

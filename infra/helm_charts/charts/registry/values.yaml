@@ -22,7 +22,7 @@ serviceAccount:
   #annotations: {{.Values.global.registry.serviceAccount_role_arn | quote}}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "sbrc-test-sa"
+  #name: "sbrc-test-sa"
 
 podAnnotations:
   eks.amazonaws.com/compute-type: fargate #choose compute type as ec2 or fargate
