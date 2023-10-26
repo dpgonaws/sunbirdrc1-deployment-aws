@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sunbird-rc-issuance
+  labels:
+    app: sunbird-rc-issuance
+spec:
+  containers:
+  - name: sunbird-rc-issuance-portal
+    image: subhash83925/sunbird-rc-issuance-portal:v1.0.0
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: nginx-volume
+      mountPath: /etc/nginx/conf.d
+  volumes:
+    - name: nginx-volume
+      configMap:
+        name: sunbird-rc-issuance-nginx-config
+        items:
+        - key: default.conf
+          path: default.conf
