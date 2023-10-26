@@ -1,7 +1,7 @@
 global:
   host: "loadtesting.xix.in" #to be filled
   database:
-    host: "sbrc-pgsql-db.cluster-cveklit2rj4m.ap-south-1.rds.amazonaws.com"
+    host: "rds-stack-databaseb269d8bb-f0056bbk8g2y.cluster-cveklit2rj4m.ap-south-1.rds.amazonaws.com"
     user: "postgres"
     port: "5432"
     vendor: "postgres"
