@@ -55,11 +55,11 @@ spec:
                 secretKeyRef:
                   name: rc-secret
                   key: MINIO_SECRET_KEY
-            - name: elastic_search_password
-              valueFrom:
-                secretKeyRef:
-                  name: rc-secret
-                  key: ELASTIC_SEARCH_PASSWORD
+            #- name: elastic_search_password
+            #  valueFrom:
+            #    secretKeyRef:
+            #      name: rc-secret
+            #      key: ELASTIC_SEARCH_PASSWORD
             - name: sunbird_sso_admin_client_secret
               valueFrom:
                 secretKeyRef:
